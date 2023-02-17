@@ -1,0 +1,29 @@
+syntax = "proto3";
+option go_package="./;terminal";
+package terminal;
+
+
+service RemoteTerminalService{
+
+  rpc NewTerminal(RemoteTerminalRequest) returns (RemoteTerminalResponse){}
+  rpc CloseTerminal(RemoteTerminalRequest) returns (RemoteTerminalResponse){}
+  rpc ExecCommand(RemoteTerminalRequest) returns (RemoteTerminalResponse){}
+
+}
+
+message RemoteTerminalRequest{
+  string dstIP = 1;
+  string srcIP = 2;
+  uint64 shellId = 3;
+  string command = 4;
+  uint64 deviceId = 5;
+}
+
+message RemoteTerminalResponse{
+  string dstIP = 1;
+  string srcIP = 2;
+  uint64 shellId = 3;
+  string stdout = 4;
+  string stderr = 5;
+  string err = 6;
+}
