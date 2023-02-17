@@ -8,7 +8,8 @@ import (
 )
 
 type RemoteTerminal struct {
-	_handle  uint64
+	_handle uint64
+
 	_dstIP   string
 	_dstPort int
 }
@@ -21,7 +22,7 @@ func (t *RemoteTerminal) Init(serverIP string, serverPort int) error {
 		log.Error(err)
 		return err
 	}
-	log.Info(fmt.Sprintf("Connect to terminal service[%s:%d].", serverIP, serverPort))
+	log.Info(fmt.Sprintf("Connect to terminal service [%s:%d].", serverIP, serverPort))
 	t._dstIP = serverIP
 	t._dstPort = serverPort
 	return nil
@@ -49,8 +50,8 @@ func (t *RemoteTerminal) Execute(cmd string) (string, string, error) {
 	return rep.Stdout, rep.Stderr, nil
 }
 
-func (t *RemoteTerminal) Close(cmd string) error {
-	req := newRemoteTerminalRequest("", "", cmd, t._handle, 0)
+func (t *RemoteTerminal) Close() error {
+	req := newRemoteTerminalRequest("", "", "", t._handle, 0)
 	conn, err := grpc.Dial(fmt.Sprintf("%s:%d", t._dstIP, t._dstPort), grpc.WithInsecure())
 	if err != nil {
 		log.Error(err.Error())

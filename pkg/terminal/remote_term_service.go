@@ -46,7 +46,7 @@ func (s *RemoteTerminalService) CloseTerminal(ctx context.Context, request *Remo
 func (s *RemoteTerminalService) ExecCommand(ctx context.Context, request *RemoteTerminalRequest) (*RemoteTerminalResponse, error) {
 	resp := new(RemoteTerminalResponse)
 	handle := request.ShellId
-	fmt.Println(fmt.Sprintf("shell:%d should exec %s", handle, request.Command))
+	//fmt.Println(fmt.Sprintf("shell:%d should exec %s", handle, request.Command))
 	if terminal, ok := s.shellIdsMap[handle]; ok {
 		command := request.Command
 		sout, serr, err := terminal.Execute(command)
@@ -71,11 +71,13 @@ func LaunchRemoteTerminalService(ip string, port int) {
 	s := grpc.NewServer(options...)
 	rs := RemoteTerminalService{shellIdsMap: make(map[uint64]*Terminal)}
 	RegisterRemoteTerminalServiceServer(s, &rs)
+	log.Info("Start Remote Terminal Service!")
 	err := s.Serve(l)
 	if err != nil {
-		log.Error(err.Error())
+		log.Error(err)
 		return
 	}
+
 }
 
 func newNetListener(ip string, port int) net.Listener {
