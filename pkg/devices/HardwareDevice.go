@@ -1,6 +1,8 @@
 package devices
 
-import "go-dl-benchmark/pkg/terminal"
+import (
+	"go-dl-benchmark/pkg/terminal"
+)
 
 const (
 	Android = "android"
@@ -13,9 +15,9 @@ const (
 	X86_64 = "x86_64"
 	Arm64  = "arm64"
 
-	Cpu = "Cpu"
-	Gpu = "Gpu"
-	Npu = "Npu"
+	Cpu = "cpu"
+	Gpu = "gpu"
+	Npu = "npu"
 )
 
 type HardwareDescription struct {
@@ -81,11 +83,10 @@ func (t *HardwareDevice) Disconnect() error {
 func (t *HardwareDevice) ExecuteCommand(cmd string) (string, string, error) {
 	if t.Description.OSType == Windows {
 		stdout, stderr, err := t._terminal.Execute(cmd)
-		if err == nil {
-			return stdout, stderr, err
-		}
+		return stdout, stderr, err
 	} else {
 		// 如果不是一级设备应当先和一级设备沟通
+		return "", "", nil
 	}
-	return "", "", nil
+
 }
