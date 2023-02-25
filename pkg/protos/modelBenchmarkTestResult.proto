@@ -1,0 +1,56 @@
+syntax = "proto3";
+option go_package="./;protos";
+package protos;
+
+
+
+message ModelAnalysisResult{
+    ModelStaticAnalysisResult StaticResult = 1;
+    ModelRuntimeAnalysisResult RuntimeResult = 2;
+}
+
+
+message ModelStaticAnalysisResult{
+  uint64 Memory = 1;
+  uint64 Params = 2;
+  uint64 MACs = 3;
+  repeated OPStaticInformation OPStaticInformationList = 11;
+}
+
+message OPStaticInformation{
+   string Name = 1;
+   string InputShape = 2;
+   string OutputShape  = 3;
+   uint64 MACs = 11;
+   uint64 Memory = 12;
+   uint64 Params = 13;
+   float MACsPercent = 21;
+   float MemoryPercent = 22;
+   float ParamsPercent = 23;
+}
+
+
+
+message ModelRuntimeAnalysisResult{
+  float AvgTotalLatency = 1;
+  float AvgPeakMemory = 2;
+  float AvgPeakPower = 3;
+  float InitTime = 11;
+  float InitMemory = 12;
+  repeated SingleRoundRuntimeResult MultiRoundsProfileResult = 21;
+}
+
+message SingleRoundRuntimeResult{
+  int32 RoundIndex  = 1;
+  float TotalRoundLatency = 2;
+  int64 TotalRoundPeakMemory = 3;
+  float TotalRoundAvgPower = 4;
+  repeated OPRuntimeInformation OPRuntimeInformationList = 11;
+ }
+
+message OPRuntimeInformation{
+  string Name = 1;
+  float Latency = 2;
+  int64 Memory = 3;
+  float Power = 4;
+}

@@ -1,0 +1,3 @@
+[submodule "tools/ModelProfileTool"]
+	path = tools/ModelProfileTool
+	url = git@github.com:SheepHuan/ModelProfileTool.git

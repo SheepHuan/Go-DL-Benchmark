@@ -5,6 +5,7 @@ import (
 	"fmt"
 	log "github.com/sirupsen/logrus"
 	"go-dl-benchmark/pkg/devices"
+	"go-dl-benchmark/pkg/protos"
 )
 
 // https://github.com/ThanatosShinji/onnx-tool/issues/16
@@ -30,31 +31,26 @@ type StaticAnalysisResult struct {
 	OnnxOperateInfoList []OperateStaticInfo `json:"OperateStaticInfo"`
 }
 
-func OnnxruntimeStaticAnalyse(config ModelBenchmarkTestConfig, device devices.HardwareDevice) StaticAnalysisResult {
+func OnnxruntimeStaticAnalyse(config *protos.ModelBenchmarkTestArgs, device devices.HardwareDevice) *protos.ModelStaticAnalysisResult {
 	script := fmt.Sprintf("conda activate ModelProfiler\n"+
-		"python tools/onnxruntime/onnx_static.py "+
+		"cd tools/ModelProfileTool \n"+
+		"python -m profile.onnxruntime.onnx_static "+
 		"--model_path=%s "+
 		"--shape=%s "+
-		"--type=%s \n", config.ModelPath, config.InputShape, config.InputTensorType)
-	result := StaticAnalysisResult{}
+		"--type=%d \n", config.GetModelPath(), config.GetInputTensorShape(), config.GetInputTensorType())
+	result := protos.ModelStaticAnalysisResult{}
 	stdout, stderr, err := device.ExecuteCommand(script)
 
 	if err != nil {
 		log.Error(stderr)
 		log.Error(err)
-		return result
+		return &result
 	}
+	//err = proto.Unmarshal([]byte(stdout), &result)
 	err = json.Unmarshal([]byte(stdout), &result)
 	if err != nil {
-		return result
+		log.Error(err)
+		return &result
 	}
-	return result
-}
-
-func paddleliteStaticAnalyse() {
-
-}
-
-func tfliteStaticAnalyse() {
-
+	return &result
 }

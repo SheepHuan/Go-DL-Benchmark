@@ -1,0 +1,35 @@
+syntax = "proto3";
+option go_package="./;protos";
+package protos;
+
+enum FrameworkType{
+  paddlelite = 0;
+  tflite = 1;
+  onnxruntime = 2;
+  nnmeter = 3;
+}
+
+enum TensorDataType{
+  int8 = 0;
+  int16 = 1;
+  int32 = 2;
+  int64 = 3;
+  float8 = 4;
+  float16 = 5;
+  float32 = 6;
+}
+
+message ModelBenchmarkTestArgs {
+  string ModelPath = 1;
+  FrameworkType Framework  = 2;
+
+  //TODO 考虑是否需要删除
+  string InputTensorShape = 3;
+  TensorDataType InputTensorType = 4;
+
+  //Run setting
+  int32 WarmupRounds = 5;
+  int32 RunRounds = 6;
+
+  //
+}
