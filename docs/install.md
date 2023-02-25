@@ -28,3 +28,12 @@ docker run -it -v ~/code:/workspace -p
 # [挂载USB设备到docker](https://hlyani.github.io/notes/docker/mount_usb_to_docker.html)
 
 ```
+
+
+
+### 编译protos
+```bash
+
+protoc --go_out=pkg/protos pkg/protos/modelBenchmarkTestArgs.proto
+protoc --go_out=pkg/protos pkg/protos/modelBenchmarkTestResult.proto
+```
