@@ -1,0 +1,20 @@
+syntax = "proto3";
+option go_package="./;protos";
+package protos;
+
+
+enum DeviceOSType{
+  android = 0;
+  ios = 1;
+  mac = 2;
+  linux = 3;
+  windows = 4;
+  none = 5;
+}
+
+enum ComputabeHardwareType{
+  cpu = 0;
+  gpu = 1;
+  npu = 2;
+  tpu = 3;
+}

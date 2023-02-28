@@ -42,42 +42,6 @@ func (s *BenchmarkAbility) queryFrameworksSupportRuntime(framework protos.Framew
 	return found
 }
 
-//func (s *BenchmarkAbility) ModelBenchmarkTest(config ModelBenchmarkTestConfig, device devices.HardwareDevice) (ModelBenchmarkTestResult, error) {
-//	// 1. 保证设备已连接
-//	err := device.Connect()
-//	if err != nil {
-//		log.Error("Can't connect device!.")
-//		return ModelBenchmarkTestResult{}, err
-//	}
-//	modelTestResult := ModelBenchmarkTestResult{}
-//	modelTestResult.TestConfig = config
-//	//print(s)
-//	if s.IsSupportModelBenchmarkTest {
-//		if s.queryFrameworksSupportStatic(config.Framework) {
-//
-//			if config.Framework == Onnxruntime {
-//				staticResult := OnnxruntimeStaticAnalyse(config, device)
-//				modelTestResult.StaticResult = staticResult
-//			}
-//		} else {
-//			log.Warn(fmt.Sprintf("Don't support static analyse for %s now!", config.Framework))
-//		}
-//		if s.queryFrameworksSupportRuntime(config.Framework) {
-//			if config.Framework == Onnxruntime {
-//				runtimeResult := onnxruntimeRuntimeAnalyse(config, device)
-//				modelTestResult.RuntimeResult = runtimeResult
-//			}
-//		} else {
-//			log.Warn(fmt.Sprintf("Don't support runtime analyse for %s now!", config.Framework))
-//		}
-//	}
-//	err = device.Disconnect()
-//	//if err != nil {
-//	//	return ModelBenchmarkTestResult{}, err
-//	//}
-//	return modelTestResult, nil
-//}
-
 func (s *BenchmarkAbility) ModelBenchmarkTest(config *protos.ModelBenchmarkTestArgs, device devices.HardwareDevice) (*protos.ModelAnalysisResult, error) {
 	// 1. 保证设备已连接
 	err := device.Connect()

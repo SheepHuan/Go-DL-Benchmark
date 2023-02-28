@@ -2,7 +2,7 @@
 
 
 # 初始化go mod
-go mod init go-dl-benchmark
+go mod init go-dl-benchmark_v1
 go mod tidy
 
 ```
@@ -17,7 +17,7 @@ protoc --go-grpc_out=. .\remote_terminal.proto
 
 
 ```bash
-#  benchmark for docker
+#  benchmark_v1 for docker
 docker pull ubuntu:18.04
 docker run -it -v ~/code:/workspace -p 
 # 安装 anconda环境

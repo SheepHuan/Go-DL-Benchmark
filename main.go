@@ -2,7 +2,7 @@ package main
 
 import (
 	"fmt"
-	"go-dl-benchmark/pkg/benchmark/model"
+	"go-dl-benchmark/pkg/benchmark_v1/model"
 	"go-dl-benchmark/pkg/devices"
 	"go-dl-benchmark/pkg/protos"
 	"go-dl-benchmark/pkg/terminal"
