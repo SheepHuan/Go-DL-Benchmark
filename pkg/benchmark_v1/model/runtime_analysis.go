@@ -3,9 +3,9 @@ package model
 import (
 	"encoding/json"
 	"fmt"
+	"github.com/sheephuan/go-dl-benchmark/pkg/devices"
+	"github.com/sheephuan/go-dl-benchmark/pkg/protos"
 	log "github.com/sirupsen/logrus"
-	"go-dl-benchmark/pkg/devices"
-	"go-dl-benchmark/pkg/protos"
 )
 
 type OperateRuntimeInfo struct {

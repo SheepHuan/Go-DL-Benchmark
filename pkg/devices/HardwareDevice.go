@@ -1,7 +1,7 @@
 package devices
 
 import (
-	"go-dl-benchmark/pkg/terminal"
+	"github.com/sheephuan/go-dl-benchmark/pkg/terminal"
 )
 
 const (
