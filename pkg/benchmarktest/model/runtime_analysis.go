@@ -1,8 +1,9 @@
 package model
 
 import (
-	"encoding/json"
+	"encoding/base64"
 	"fmt"
+	"github.com/golang/protobuf/proto"
 	"github.com/sheephuan/go-dl-benchmark/pkg/devices"
 	"github.com/sheephuan/go-dl-benchmark/pkg/protos"
 	log "github.com/sirupsen/logrus"
@@ -70,50 +71,13 @@ func nnMeterRuntimeAnalyse(config ModelBenchmarkTestConfig, device devices.Hardw
 	return RuntimeAnalysisResult{}
 }
 
-//func onnxruntimeRuntimeAnalyse(config ModelBenchmarkTestConfig, device devices.HardwareDevice) RuntimeAnalysisResult {
-//	script := fmt.Sprintf("conda activate ModelProfiler\npython tools/onnxruntime/onnx_runtime_for_pc.py "+
-//		"--model_path=%s "+
-//		"--input_tensor_shape=%s "+
-//		"--input_tensor_type=%s "+
-//		"--device=%s "+
-//		"--rounds=%d",
-//		config.ModelPath,
-//		config.InputShape,
-//		config.InputTensorType,
-//		device.Description.ComputableChip,
-//		config.RunRounds,
-//	)
-//
-//	if device.IsAlive() {
-//		result := RuntimeAnalysisResult{}
-//		stdout, stderr, err := device.ExecuteCommand(script)
-//		//fmt.Println(fmt.Sprintf("out:%s\nerr:%s\n", stdout, stderr))
-//		if err != nil {
-//			log.Error(stderr)
-//			log.Error(err)
-//			return RuntimeAnalysisResult{}
-//		}
-//		err = json.Unmarshal([]byte(stdout), &result)
-//		if err != nil {
-//			log.Error(err)
-//			return result
-//		}
-//		return result
-//
-//	} else {
-//		log.Error(fmt.Sprintf("Device:%s:%d is not alive!", device.Description.Ip, device.Description.Port))
-//	}
-//
-//	return RuntimeAnalysisResult{}
-//}
-
 func onnxruntimeRuntimeAnalyse(config *protos.ModelBenchmarkTestArgs, device devices.HardwareDevice) *protos.ModelRuntimeAnalysisResult {
 	script := fmt.Sprintf("conda activate ModelProfiler\n"+
 		"cd  tools/ModelProfileTool/\n"+
 		"python -m profile.onnxruntime.onnx_runtime_for_pc "+
 		"--model_path=%s "+
 		"--input_tensor_shape=%s "+
-		"--input_tensor_type=%s "+
+		"--input_tensor_type=%d "+
 		"--device=%s "+
 		"--rounds=%d",
 		config.GetModelPath(),
@@ -126,13 +90,17 @@ func onnxruntimeRuntimeAnalyse(config *protos.ModelBenchmarkTestArgs, device dev
 	if device.IsAlive() {
 		result := protos.ModelRuntimeAnalysisResult{}
 		stdout, stderr, err := device.ExecuteCommand(script)
-		//fmt.Println(fmt.Sprintf("out:%s\nerr:%s\n", stdout, stderr))
 		if err != nil {
 			log.Error(stderr)
 			log.Error(err)
 			return &result
 		}
-		err = json.Unmarshal([]byte(stdout), &result)
+		dec_str, err := base64.StdEncoding.DecodeString(stdout)
+		if err != nil {
+			log.Error(err)
+			return &result
+		}
+		err = proto.Unmarshal(dec_str, &result)
 		if err != nil {
 			log.Error(err)
 			return &result

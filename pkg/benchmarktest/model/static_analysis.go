@@ -1,8 +1,9 @@
 package model
 
 import (
-	"encoding/json"
+	"encoding/base64"
 	"fmt"
+	"github.com/golang/protobuf/proto"
 	"github.com/sheephuan/go-dl-benchmark/pkg/devices"
 	"github.com/sheephuan/go-dl-benchmark/pkg/protos"
 	log "github.com/sirupsen/logrus"
@@ -46,8 +47,17 @@ func OnnxruntimeStaticAnalyse(config *protos.ModelBenchmarkTestArgs, device devi
 		log.Error(err)
 		return &result
 	}
-	//err = proto.Unmarshal([]byte(stdout), &result)
-	err = json.Unmarshal([]byte(stdout), &result)
+	if stderr != "" {
+		log.Error(stderr)
+		return &result
+	}
+	//err = json.Unmarshal([]byte(stdout), &result)
+	dec_str, err := base64.StdEncoding.DecodeString(stdout)
+	if err != nil {
+		log.Error(err)
+		return &result
+	}
+	err = proto.Unmarshal(dec_str, &result)
 	if err != nil {
 		log.Error(err)
 		return &result

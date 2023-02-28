@@ -2,10 +2,10 @@ package main
 
 import (
 	"fmt"
-	"go-dl-benchmark/pkg/benchmark_v1/model"
-	"go-dl-benchmark/pkg/devices"
-	"go-dl-benchmark/pkg/protos"
-	"go-dl-benchmark/pkg/terminal"
+	"github.com/sheephuan/go-dl-benchmark/pkg/benchmarktest/model"
+	"github.com/sheephuan/go-dl-benchmark/pkg/devices"
+	"github.com/sheephuan/go-dl-benchmark/pkg/protos"
+	"github.com/sheephuan/go-dl-benchmark/pkg/terminal"
 	"time"
 )
 
@@ -16,8 +16,8 @@ func main() {
 		Framework:        protos.FrameworkType_onnxruntime,
 		InputTensorShape: "1,3,512,512",
 		InputTensorType:  protos.TensorDataType_float32,
-		WarmupRounds:     0,
-		RunRounds:        0,
+		WarmupRounds:     1,
+		RunRounds:        1,
 	}
 
 	device := devices.HardwareDevice{
@@ -31,9 +31,8 @@ func main() {
 		},
 	}
 
-	ability := model.BenchmarkAbility{
+	ability := model.ModelBenchmarkTestAbility{
 		IsSupportModelBenchmarkTest:           true,
-		IsSupportHardwareBenchmarkTest:        false,
 		SupportedFrameworksForRuntimeAnalysis: []protos.FrameworkType{protos.FrameworkType_onnxruntime},
 		SupportedFrameworksForStaticAnalysis:  []protos.FrameworkType{protos.FrameworkType_onnxruntime},
 	}
