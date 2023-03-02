@@ -48,10 +48,10 @@ func (s *ModelBenchmarkTestAbility) ModelBenchmarkTest(config *protos.ModelBench
 	modelTestResult := protos.ModelAnalysisResult{}
 	if s.IsSupportModelBenchmarkTest {
 		if s.queryFrameworksSupportStatic(config.GetFramework()) {
-			//if config.Framework == protos.FrameworkType_onnxruntime {
-			//	staticResult := OnnxruntimeStaticAnalyse(config, device)
-			//	modelTestResult.StaticResult = staticResult
-			//}
+			if config.Framework == protos.FrameworkType_onnxruntime {
+				staticResult := OnnxruntimeStaticAnalyse(config, device)
+				modelTestResult.StaticResult = staticResult
+			}
 		} else {
 			log.Warn(fmt.Sprintf("Don't support static analyse for %s now!", config.Framework))
 		}
