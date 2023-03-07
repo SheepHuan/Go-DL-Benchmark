@@ -7,6 +7,8 @@ import (
 	log "github.com/sirupsen/logrus"
 )
 
+var tools_path = "D:\\code\\Go-DL-Benchmark\\tools\\ModelProfileTool"
+
 type ModelBenchmarkTestAbility struct {
 	//IsSupportHardwareBenchmarkTest bool `json:"IsSupportHardwareBenchmarkTest"`
 	IsSupportModelBenchmarkTest bool `json:"IsSupportModelBenchmarkTest"`

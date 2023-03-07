@@ -11,13 +11,14 @@ import (
 
 func onnxruntimeRuntimeAnalyse(config *protos.ModelBenchmarkTestArgs, device *g_physical_devices.PhysicalDeviceClient) *protos.ModelRuntimeAnalysisResult {
 	script := fmt.Sprintf("conda activate ModelProfiler\n"+
-		"cd  D:\\code\\Go-DL-Benchmark\\tools\\ModelProfileTool\n"+
+		"cd  %s\n"+
 		"python -m profile.onnxruntime.onnx_runtime_for_pc "+
 		"--model_path=%s "+
 		"--input_tensor_shape=%s "+
 		"--input_tensor_type=%d "+
 		"--device=%d "+
 		"--rounds=%d",
+		tools_path,
 		config.GetModelPath(),
 		config.GetInputTensorShape(),
 		config.GetInputTensorType(),

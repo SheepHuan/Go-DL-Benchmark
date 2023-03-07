@@ -2,15 +2,26 @@ package main
 
 import (
 	"fmt"
+	"github.com/golang/protobuf/jsonpb"
 	"github.com/sheephuan/go-dl-benchmark/pkg/g_benchmark_test/model"
 	"github.com/sheephuan/go-dl-benchmark/pkg/g_physical_devices"
 	"github.com/sheephuan/go-dl-benchmark/pkg/protos"
 	"github.com/sheephuan/go-dl-benchmark/pkg/terminal"
+	"os"
 	"time"
 )
 
 func main() {
+
 	ip, port := "127.0.0.1", 10001
+
+	devDesc := protos.PhysicalDeviceDescription{}
+	if jsonStr, err := os.ReadFile("config.json"); err == nil {
+		err = jsonpb.UnmarshalString(string(jsonStr), &devDesc)
+		if err != nil {
+			return
+		}
+	}
 	config := &protos.ModelBenchmarkTestArgs{
 		ModelPath:        "D:\\code\\Go-DL-Benchmark\\res\\resnet18-12.onnx",
 		Framework:        protos.FrameworkType_onnxruntime,
@@ -20,28 +31,18 @@ func main() {
 		RunRounds:        1,
 	}
 
-	//device := g_physical_devices.HardwareDevice{
-	//	Description: g_physical_devices.HardwareDescription{
-	//		DeviceName:     "ROG",
-	//		OSType:         g_physical_devices.Windows,
-	//		Architecture:   g_physical_devices.X86_64,
-	//		ComputableChip: g_physical_devices.Cpu,
-	//		Ip:             ip,
-	//		Port:           port,
-	//	},
-	//}
-
 	device := &g_physical_devices.PhysicalDeviceClient{
-		DeviceDescription: protos.PhysicalDeviceDescription{
-			DeviceName:      "ROG",
-			OSType:          protos.DeviceOSType_windows,
-			ArchType:        protos.ArchitectureType_x86_64,
-			ComputableChips: []protos.ComputableChipType{protos.ComputableChipType_cpu},
-			DeviceAddress: &protos.PhysicalDeviceDescription_PcAddr{PcAddr: &protos.PCDeviceAddress{
-				DeviceIp:   ip,
-				DevicePort: int32(port),
-			}},
-		},
+		DeviceDescription: devDesc,
+		//DeviceDescription: protos.PhysicalDeviceDescription{
+		//	DeviceName:      "ROG",
+		//	OSType:          protos.DeviceOSType_windows,
+		//	ArchType:        protos.ArchitectureType_x86_64,
+		//	ComputableChips: []protos.ComputableChipType{protos.ComputableChipType_cpu},
+		//	DeviceAddress: &protos.PhysicalDeviceDescription_PcAddr{PcAddr: &protos.PCDeviceAddress{
+		//		DeviceIp:   ip,
+		//		DevicePort: int32(port),
+		//	}},
+		//},
 	}
 
 	ability := model.ModelBenchmarkTestAbility{

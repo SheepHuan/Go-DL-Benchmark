@@ -12,11 +12,11 @@ import (
 // https://github.com/ThanatosShinji/onnx-tool/issues/16
 func OnnxruntimeStaticAnalyse(config *protos.ModelBenchmarkTestArgs, device *g_physical_devices.PhysicalDeviceClient) *protos.ModelStaticAnalysisResult {
 	script := fmt.Sprintf("conda activate ModelProfiler\n"+
-		"cd D:\\code\\Go-DL-Benchmark\\tools\\ModelProfileTool \n"+
+		"cd %s \n"+
 		"python -m profile.onnxruntime.onnx_static "+
 		"--model_path=%s "+
 		"--shape=%s "+
-		"--type=%d \n", config.GetModelPath(), config.GetInputTensorShape(), config.GetInputTensorType())
+		"--type=%d \n", tools_path, config.GetModelPath(), config.GetInputTensorShape(), config.GetInputTensorType())
 	result := protos.ModelStaticAnalysisResult{}
 	stdout, stderr, err := device.ExecuteCommand(script)
 
