@@ -36,4 +36,5 @@ docker run -it -v ~/code:/workspace -p
 
 protoc --go_out=pkg/protos pkg/protos/modelBenchmarkTestArgs.proto
 protoc --go_out=pkg/protos pkg/protos/modelBenchmarkTestResult.proto
+protoc --go_out=pkg/protos pkg/protos/physicalDeviceDescription.proto
 ```

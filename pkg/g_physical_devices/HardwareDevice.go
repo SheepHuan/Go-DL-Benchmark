@@ -1,4 +1,4 @@
-package devices
+package g_physical_devices
 
 import (
 	"github.com/sheephuan/go-dl-benchmark/pkg/terminal"

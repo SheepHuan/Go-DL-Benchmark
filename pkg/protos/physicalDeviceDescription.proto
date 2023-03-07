@@ -1,0 +1,54 @@
+syntax = "proto3";
+option go_package="./;protos";
+package protos;
+
+enum DeviceOSType{
+  none = 0;
+  android = 1;
+  ios = 2;
+  mac = 3;
+  linux = 4;
+  windows = 5;
+}
+
+enum ComputableChipType{
+  cpu = 0;
+  gpu = 1;
+  npu = 2;
+  tpu = 3;
+}
+
+enum ArchitectureType{
+  x86_64 = 0;
+  arm64 = 1;
+}
+
+message PhysicalDeviceDescription{
+  string DeviceName = 1;
+  DeviceOSType OSType = 2;
+  ArchitectureType ArchType = 3;
+  repeated ComputableChipType ComputableChips = 4;
+  // service address
+  oneof DeviceAddress{
+    PCDeviceAddress PcAddr = 21;
+    AndroidDeviceAddress AndroidAddr = 22;
+    UsbDeviceAddress UsbAddr =23;
+  }
+}
+
+message PCDeviceAddress{
+  string DeviceIp = 1;
+  int32  DevicePort = 2;
+}
+
+
+message AndroidDeviceAddress{
+  PCDeviceAddress parentAddress = 1;
+  string SerialNumber = 2;
+  string  IpAddress = 3;
+}
+
+message UsbDeviceAddress{
+  PCDeviceAddress parentAddress = 1;
+  string  IpAddress = 2;
+}

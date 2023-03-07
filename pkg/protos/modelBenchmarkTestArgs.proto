@@ -23,13 +23,10 @@ message ModelBenchmarkTestArgs {
   string ModelPath = 1;
   FrameworkType Framework  = 2;
 
-  //TODO 考虑是否需要删除
+  //TODO 考虑删除,由静态分析提供相关输入输出参数
   string InputTensorShape = 3;
   TensorDataType InputTensorType = 4;
-
   //Run setting
   int32 WarmupRounds = 5;
   int32 RunRounds = 6;
-
-  //
 }
