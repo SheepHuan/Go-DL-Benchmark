@@ -2,8 +2,8 @@ package main
 
 import (
 	"fmt"
-	"github.com/sheephuan/go-dl-benchmark/pkg/benchmarktest/model"
-	"github.com/sheephuan/go-dl-benchmark/pkg/devices"
+	"github.com/sheephuan/go-dl-benchmark/pkg/g_benchmark_test/model"
+	"github.com/sheephuan/go-dl-benchmark/pkg/g_physical_devices"
 	"github.com/sheephuan/go-dl-benchmark/pkg/protos"
 	"github.com/sheephuan/go-dl-benchmark/pkg/terminal"
 	"time"
@@ -20,14 +20,27 @@ func main() {
 		RunRounds:        1,
 	}
 
-	device := devices.HardwareDevice{
-		Description: devices.HardwareDescription{
-			DeviceName:     "ROG",
-			OSType:         devices.Windows,
-			Architecture:   devices.X86_64,
-			ComputableChip: devices.Cpu,
-			Ip:             ip,
-			Port:           port,
+	//device := g_physical_devices.HardwareDevice{
+	//	Description: g_physical_devices.HardwareDescription{
+	//		DeviceName:     "ROG",
+	//		OSType:         g_physical_devices.Windows,
+	//		Architecture:   g_physical_devices.X86_64,
+	//		ComputableChip: g_physical_devices.Cpu,
+	//		Ip:             ip,
+	//		Port:           port,
+	//	},
+	//}
+
+	device := &g_physical_devices.PhysicalDeviceClient{
+		DeviceDescription: protos.PhysicalDeviceDescription{
+			DeviceName:      "ROG",
+			OSType:          protos.DeviceOSType_windows,
+			ArchType:        protos.ArchitectureType_x86_64,
+			ComputableChips: []protos.ComputableChipType{protos.ComputableChipType_cpu},
+			DeviceAddress: &protos.PhysicalDeviceDescription_PcAddr{PcAddr: &protos.PCDeviceAddress{
+				DeviceIp:   ip,
+				DevicePort: int32(port),
+			}},
 		},
 	}
 

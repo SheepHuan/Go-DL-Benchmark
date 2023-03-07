@@ -2,7 +2,7 @@ package model
 
 import (
 	"fmt"
-	"github.com/sheephuan/go-dl-benchmark/pkg/devices"
+	"github.com/sheephuan/go-dl-benchmark/pkg/g_physical_devices"
 	"github.com/sheephuan/go-dl-benchmark/pkg/protos"
 	log "github.com/sirupsen/logrus"
 )
@@ -38,7 +38,7 @@ func (s *ModelBenchmarkTestAbility) queryFrameworksSupportRuntime(framework prot
 	return found
 }
 
-func (s *ModelBenchmarkTestAbility) ModelBenchmarkTest(config *protos.ModelBenchmarkTestArgs, device devices.HardwareDevice) (*protos.ModelAnalysisResult, error) {
+func (s *ModelBenchmarkTestAbility) ModelBenchmarkTest(config *protos.ModelBenchmarkTestArgs, device *g_physical_devices.PhysicalDeviceClient) (*protos.ModelAnalysisResult, error) {
 	// 1. 保证设备已连接
 	err := device.Connect()
 	if err != nil {
