@@ -24,10 +24,11 @@ enum ArchitectureType{
 }
 
 message PhysicalDeviceDescription{
-  string DeviceName = 1;
-  DeviceOSType OSType = 2;
-  ArchitectureType ArchType = 3;
-  repeated ComputableChipType ComputableChips = 4;
+  string SerialNumber = 1;
+  string DeviceName = 2;
+  DeviceOSType OSType = 3;
+  ArchitectureType ArchType = 4;
+  repeated ComputableChipType ComputableChips = 5;
   // service address
   oneof DeviceAddress{
     PCDeviceAddress PcAddr = 21;
