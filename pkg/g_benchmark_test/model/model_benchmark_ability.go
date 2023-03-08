@@ -70,5 +70,5 @@ func (s *ModelBenchmarkTestAbility) ModelBenchmarkTest(config *protos.ModelBench
 	//if err != nil {
 	//	return ModelBenchmarkTestResult{}, err
 	//}
-	return &modelTestResult, nil
+	return &modelTestResult, err
 }

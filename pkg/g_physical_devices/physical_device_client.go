@@ -8,7 +8,7 @@ import (
 type PhysicalDeviceClient struct {
 	_terminal         *terminal.RemoteTerminal
 	_isAlive          bool
-	DeviceDescription protos.PhysicalDeviceDescription
+	DeviceDescription *protos.PhysicalDeviceDescription
 }
 
 func (s *PhysicalDeviceClient) IsAlive() bool {
