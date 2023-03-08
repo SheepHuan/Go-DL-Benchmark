@@ -1,3 +1,10 @@
-{"DeviceName":"ROG","OSType":"windows","ComputableChips":["cpu"],"PcAddr":{"DeviceIp":"127.0.0.1",
-  "DevicePort": 10001
-}}
+{
+  "DeviceName":"ROG",
+  "OSType":"windows",
+  "ComputableChips":["cpu"],
+  "PcAddr":
+  {
+    "DeviceIp":"127.0.0.1",
+    "DevicePort": 10001
+  }
+}
