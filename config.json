@@ -3,6 +3,7 @@
   "DeviceName":"ROG",
   "OSType":"windows",
   "ComputableChips":["cpu"],
+  "ArchType": "x86_64",
   "PcAddr":
   {
     "DeviceIp":"127.0.0.1",
