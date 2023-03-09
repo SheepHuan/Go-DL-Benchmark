@@ -4,8 +4,9 @@ import (
 	"bytes"
 	"encoding/json"
 	"fmt"
-	"github.com/golang/protobuf/jsonpb"
+	"github.com/golang/protobuf/proto"
 	"github.com/sheephuan/go-dl-benchmark/pkg/protos"
+	"github.com/sheephuan/go-dl-benchmark/pkg/utils"
 	"io"
 	"net/http"
 )
@@ -19,11 +20,12 @@ type PhysicalDevicesForm struct {
 
 func RegisterDevicesSelf(descriptions []*protos.PhysicalDeviceDescription) error {
 	apiUrl := BASE_URL + "/PhysicalDeviceComm/registerPhysicalDevices"
-	marshaler := jsonpb.Marshaler{}
+
 	var stringList []string
 	stringList = make([]string, len(descriptions))
 	for i, item := range descriptions {
-		s, _ := marshaler.MarshalToString(item)
+		d, _ := proto.Marshal(item)
+		s := utils.Pb2Base64(d)
 		stringList[i] = s
 	}
 	registerDevicesForm := PhysicalDevicesForm{RegisterDevicesList: stringList, DeleteDevicesList: []string{}}
