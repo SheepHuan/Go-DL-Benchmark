@@ -37,4 +37,8 @@ docker run -it -v ~/code:/workspace -p
 protoc --go_out=pkg/protos pkg/protos/modelBenchmarkTestArgs.proto
 protoc --go_out=pkg/protos pkg/protos/modelBenchmarkTestResult.proto
 protoc --go_out=pkg/protos pkg/protos/physicalDeviceDescription.proto
+
+# js 编译
+# https://www.jianshu.com/p/00a6a03dff80
+protoc --js_out=import_style=commonjs,binary:. modelBenchmarkTestArgs.proto modelBenchmarkTestResult.proto physicalDeviceDescription.proto
 ```

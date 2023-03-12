@@ -1,17 +1,14 @@
 package g_physical_devices
 
 import (
-	"bytes"
 	"encoding/json"
 	"fmt"
 	"github.com/golang/protobuf/proto"
 	"github.com/sheephuan/go-dl-benchmark/pkg/protos"
 	"github.com/sheephuan/go-dl-benchmark/pkg/utils"
-	"io"
-	"net/http"
 )
 
-var BASE_URL = "http://127.0.0.1:8888/v1"
+var BASE_URL = "http://127.0.0.1:8888"
 
 type PhysicalDevicesForm struct {
 	RegisterDevicesList []string `json:"registerDevicesList"`
@@ -19,7 +16,7 @@ type PhysicalDevicesForm struct {
 }
 
 func RegisterDevicesSelf(descriptions []*protos.PhysicalDeviceDescription) error {
-	apiUrl := BASE_URL + "/PhysicalDeviceComm/registerPhysicalDevices"
+	//apiUrl := BASE_URL + "/hardwareComm/registerDevices"
 
 	var stringList []string
 	stringList = make([]string, len(descriptions))
@@ -29,18 +26,21 @@ func RegisterDevicesSelf(descriptions []*protos.PhysicalDeviceDescription) error
 		stringList[i] = s
 	}
 	registerDevicesForm := PhysicalDevicesForm{RegisterDevicesList: stringList, DeleteDevicesList: []string{}}
-	b, err := json.Marshal(registerDevicesForm)
-	if err == nil {
-		payload := bytes.NewBuffer(b)
-		resp, err := http.Post(apiUrl, "application/json;charset=utf-8", payload)
-		if err == nil {
-			body, err := io.ReadAll(resp.Body)
-			if err == nil {
-				fmt.Println(string(body))
-			}
-
-		}
-	}
+	b, _ := json.Marshal(registerDevicesForm)
+	fmt.Println(string(b))
+	//if err == nil {
+	//	payload := bytes.NewBuffer(b)
+	//	resp, err := http.Post(apiUrl, "application/json;charset=utf-8", payload)
+	//	if err == nil {
+	//		body, err := io.ReadAll(resp.Body)
+	//		if err == nil {
+	//			fmt.Println(string(body))
+	//		} else {
+	//			fmt.Println(string(body))
+	//		}
+	//
+	//	}
+	//}
 
 	return nil
 }
